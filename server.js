@@ -11,10 +11,6 @@ app.get('/', (req, res, next) => {
     res.sendFile(path.join(__dirname,'/public/main.html'));
 })
 
-app.post('/:id', (req, res, next) => {
-    res.send("post request");
-})
-
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 })
