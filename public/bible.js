@@ -9,9 +9,6 @@ const bookList = async () => {
         if(response.ok){
             jsonResponse = await response.json();
             let len = jsonResponse.books.length;
-            for (let i = 0; i < len; i++){
-                finalArray.push(jsonResponse.books[i].name);
-             };
         } 
     } catch (error) {
         console.log(error);
@@ -121,10 +118,31 @@ const textRetrieval = async () => {
     } catch(error) {
         console.log(error)
     }
+
+    let data = JSON.stringify({
+        text: jsonResponse.text,
+        reference: jsonResponse.reference
+    })
+
+    console.log(data);
+
     revealText.replaceChildren("");
     revealRef.replaceChildren("");
     revealText.style.color = "";
     revealText.append(`${jsonResponse.text}`);
     // revealVerse.appendChild(lineBreak);
     revealRef.append(`${jsonResponse.reference}`);
+
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Access-Control-Allow-Origin", "*");
+    let post = new Request("https://high-balancer-452319-n8.rj.r.appspot.com/history", 
+        {
+            method: "POST", 
+            mode: "cors",
+            headers: headers,
+            body: data,
+            redirect: "follow"
+        })
+    fetch(post);
 }
