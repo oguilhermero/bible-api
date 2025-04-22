@@ -6,7 +6,7 @@ const path = require('path');
 const app = express();
 const PORT = 8080;
 
-const { Node, LinkedList} = require(`./utils/linked-list.js`);
+const { Node, LinkedList } = require(`./public/utils/linked-list.js`);
 
 app.use(cors());
 app.use(bodyParser.json())
@@ -14,6 +14,10 @@ app.use(express.static('public'));
 app.use(morgan('dev'));
 
 let history = new LinkedList();
+
+app.get('/', (req, res) => {
+    res.redirect('/verse');
+})
 
 app.get('/verse', (req, res, next) => {
     res.sendFile(path.join(__dirname,'/public/main.html'));
